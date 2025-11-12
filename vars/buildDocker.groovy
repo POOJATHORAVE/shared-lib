@@ -1,4 +1,4 @@
-@Library('build-tools') _   // the name you register in Jenkins for the shared lib
+@Library('my-shared-library') _   // the name you register in Jenkins for the shared lib
 
 pipeline {
   agent any
