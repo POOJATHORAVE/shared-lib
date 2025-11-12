@@ -1,3 +1,3 @@
 def call() {
-  sh 'echo I am part of DevOps team'
+  sh 'I am part of DevOps team'
 }
