@@ -1,19 +1,8 @@
-@Library('my-shared-library') _   // the name you register in Jenkins for the shared lib
-
-pipeline {
-  agent any
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }    // gets your App.java + Dockerfile
-    }
-    stage('Build Docker') {
-      steps {
-        script {
-          // build image using shared library step
-          buildDocker('myorg/basic-java-app', "${env.BUILD_NUMBER}", [dockerfile: 'Dockerfile', context: '.'])
-        }
-      }
-    }
-  }
+// vars/buildDocker.groovy
+def call(String imageName, String tag, Map options = [:]) {
+    def dockerfile = options.get('dockerfile', 'Dockerfile')
+    def context = options.get('context', '.')
+    
+    echo "Building Docker image: ${imageName}:${tag}"
+    sh "docker build -t ${imageName}:${tag} -f ${dockerfile} ${context}"
 }
- 
