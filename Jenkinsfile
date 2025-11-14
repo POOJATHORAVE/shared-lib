@@ -1,21 +1,25 @@
 @Library('my-shared-library') _
 
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }
-    }
-
-    stage('Build Docker') {
-      steps {
-        script {
-          // Just builds locally — no push
-          buildDocker('myorg/basic-java-app', "${env.BUILD_NUMBER}", [dockerfile: 'Dockerfile', context: '.'])
+    stages {
+        stage('Build') {
+            steps {
+                buildStep("Compiling the application")
+            }
         }
-      }
+
+        stage('Test') {
+            steps {
+                testStep("Executing unit tests")
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                deployStep("production")
+            }
+        }
     }
-  }
 }
- 
